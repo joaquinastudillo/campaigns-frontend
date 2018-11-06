@@ -53,9 +53,3 @@ export default {
 };
 </script>
 
-<style>
-.main-navbar{
-    padding: 20px 0px 0px 0px;
-}
-</style>
-
