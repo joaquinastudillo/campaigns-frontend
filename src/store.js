@@ -8,7 +8,9 @@ axios.defaults.baseURL = 'https://campaignsapi.herokuapp.com/api'
 export const store = new Vuex.Store({
     state: {
         token: localStorage.getItem('access_token') || null,
-        campaigns: []
+        campaigns: [],
+        stores: [],
+        products: []
     },
     getters: {
         loggedIn(state){
@@ -16,9 +18,27 @@ export const store = new Vuex.Store({
         },
         campaigns(state){
             return state.campaigns
+        },
+        stores(state){
+            return state.stores
+        },
+        products(state){
+            return state.products
         }
     },
     actions: {
+        retrieveProducts(context){
+            axios.get('/products')
+            .then(response => {
+                context.commit('retrieveProducts', response.data.data)
+            })
+        },
+        retrieveStores(context){
+            axios.get('/stores')
+            .then(response => {
+                context.commit('retrieveStores', response.data.data)
+            })
+        },
         retrieveCampaigns(context){
             axios.get('/campaigns')
             .then(response => {
@@ -63,6 +83,12 @@ export const store = new Vuex.Store({
         }
     },
     mutations: {
+        retrieveProducts(state, products){
+            state.products = products
+        },
+        retrieveStores(state, stores){
+            state.stores = stores
+        },
         retrieveCampaigns(state, campaigns){
             state.campaigns = campaigns
         },
